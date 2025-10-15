@@ -1,5 +1,5 @@
 // components/TableCellRenderer.jsx
-export default function TableCellRenderer({ type, value, onImageClick }) {
+export default function TableCellRenderer({ type, value, options, onImageClick }) {
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "pending":
@@ -50,7 +50,17 @@ export default function TableCellRenderer({ type, value, onImageClick }) {
         </span>
       );
 
-      
+    case "select":
+       if (options && Array.isArray(options)) {
+        const option = options.find((opt) => opt.value === value);
+        return (
+          <span className="px-2 py-1 rounded text-sm bg-gray-100 text-gray-800">
+            {option ? option.label : value}
+          </span>
+        );
+      }
+      return <span>{value}</span>;
+
     default:
       return value;
   }
